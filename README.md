@@ -85,3 +85,9 @@ query GetLaunches {
   }
 }
 ```
+
+## context
+
+The context function is called once for every GraphQL operation that clients send to our server. The return value of this function becomes the context argument that's passed to every resolver that runs as part of that operation.
+
+By creating this context object at the beginning of each operation's execution, all of our resolvers can access the details for the logged-in user and perform actions specifically for that user.

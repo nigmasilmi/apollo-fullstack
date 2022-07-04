@@ -32,6 +32,16 @@ module.exports = {
     me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser(),
   },
 
+  Mutation: {
+    login: async (_, { email }, { dataSources }) => {
+      const user = await dataSources.userAPI.findOrCreateUser({ email });
+      if (user) {
+        user.token = Buffer.from(email).toString("base64");
+        return user;
+      }
+    },
+  },
+
   //   For most (but not all) fields of our schema, a default resolver does exactly what we want it to.
   //   Let's define a custom resolver for a schema field that needs one, Mission.missionPatch.
 
