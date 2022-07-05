@@ -233,3 +233,52 @@ This example demonstrates a use of field policies, which are cache configuration
 ## Managin Local State
 
 [go to](https://www.apollographql.com/tutorials/fullstack-quickstart/managing-local-state)
+
+### Storing local data in the Apollo cache
+
+Like most web apps, our app relies on a combination of remotely fetched data and locally stored data. We can use Apollo Client to manage both types of data, making it a single source of truth for our application's state. We can even interact with both types of data in a single operation.
+
+### Define a client-side schema
+
+This isn't required for managing local state, but it enables useful developer tooling and helps us reason about our data.
+
+- add the type definitions
+
+```
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+    cartItems: [ID!]!
+  }
+`;
+```
+
+This looks a lot like a definition from our server's schema, with one difference: <strong> we extend the Query type </strong>. You can extend a GraphQL type that's defined in another location to add fields to that type.
+
+- modify the constructior of ApolloClient
+
+```
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || ''
+  },
+  typeDefs // this is new
+});
+```
+
+- initialize reactive variables
+
+Just like on the server, we can populate client-side schema fields with data from any source we want. Apollo Client provides a couple of useful built-in options for this:
+
+- the same in-memory cache
+- reactive variables which can store arbitrary data outside the cache while still updating queries that depend on them
+
+* in cache: import makeVar
+* in cache: initialize those variables, which are functions
+
+```
+export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
+
+```
