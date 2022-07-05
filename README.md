@@ -282,3 +282,27 @@ Just like on the server, we can populate client-side schema fields with data fro
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
 
 ```
+
+We now have our client-side schema and our client-side data sources. On the server side, next we would define resolvers to connect the two.<strong> On the client side, however, we define field policies instead.</strong>
+
+### Define field policies
+
+A field policy specifies how a single GraphQL field in the Apollo Client cache is read and written. Most server-side schema fields don't need a field policy, because the default policy does the right thing: it writes query results directly to the cache and returns those results without any modifications.
+
+However, our client-side fields aren't stored in the cache! We need to define field policies to tell Apollo Client how to query those fields.
+
+```
+    isLoggedIn: {
+          read() {
+            return isLoggedInVar();
+          },
+     },
+    cartItems: {
+          read() {
+            return cartItemsVar();
+          },
+      },
+
+```
+
+Our two field policies each include a single field: a read function. Apollo Client calls a field's read function whenever that field is queried. The query result uses the function's return value as the field's value, regardless of any value in the cache or on your GraphQL server.
