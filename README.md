@@ -208,3 +208,7 @@ If you're using TypeScript, also import the necessary types that are generated f
 ```
 import * as GetLaunchListTypes from './__generated__/GetLaunchList';
 ```
+
+## Add pagination support
+
+Apollo Client provides a fetchMore helper function to assist with paginated queries. It enables you to execute the same query with different values for variables (such as the current cursor).
