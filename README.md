@@ -187,3 +187,16 @@ client
   .then(result => console.log(result));
 
 ```
+
+## Using fragments
+
+// src/pages/launches.tsx
+Notice that our query definition pulls in the LAUNCH_TILE_DATA definition above it. LAUNCH_TILE_DATA defines a GraphQL fragment, which is named LaunchTile. A fragment is useful for defining a set of fields that you can include across multiple queries without rewriting them.
+
+## Pagination details
+
+Notice that in addition to fetching a list of launches, our query fetches hasMore and cursor fields. That's because the launches query returns paginated results:
+
+- The hasMore field indicates whether there are additional launches beyond the list returned by the server.
+
+- The cursor field indicates the client's current position within the list of launches. We can execute the query again and provide our most recent cursor as the value of the $after variable to fetch the next set of launches in the list.
