@@ -306,3 +306,11 @@ However, our client-side fields aren't stored in the cache! We need to define fi
 ```
 
 Our two field policies each include a single field: a read function. Apollo Client calls a field's read function whenever that field is queried. The query result uses the function's return value as the field's value, regardless of any value in the cache or on your GraphQL server.
+
+## Query local fields
+
+You can include client-side fields in any GraphQL query you write. To do so, you add the @client directive to every client-side field in your query. This tells Apollo Client not to fetch that field's value from your server.
+
+## Modify local fields
+
+When we want to modify a server-side schema field, we execute a mutation that's handled by our server's resolvers. Modifying a local field is more straightforward, because we can directly access the field's source data (in this case, a reactive variable).
