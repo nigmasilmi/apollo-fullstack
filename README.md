@@ -212,3 +212,16 @@ import * as GetLaunchListTypes from './__generated__/GetLaunchList';
 ## Add pagination support
 
 Apollo Client provides a fetchMore helper function to assist with paginated queries. It enables you to execute the same query with different values for variables (such as the current cursor).
+
+When our new button is clicked, it calls fetchMore (passing the current cursor as the value of the after variable) and displays a Loading notice until the query returns results.
+
+## Merge cached results
+
+Apollo Client stores your query results in its in-memory cache. The cache handles most operations intelligently and efficiently, but it doesn't automatically know that we want to merge our two distinct lists of launches. To fix this, we'll define a merge function for the paginated field in our schema.
+
+// src/cache.ts
+The schema field that our server paginates is the list of launches. Modify the initialization of cache to add a merge function for the launches field
+
+This merge function takes our existing cached launches and the incoming launches and combines them into a single list, which it then returns. The cache stores this combined list and returns it to all queries that use the launches field.
+
+This example demonstrates a use of field policies, which are cache configuration options that are specific to individual fields in your schema.
