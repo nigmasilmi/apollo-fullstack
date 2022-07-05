@@ -200,3 +200,11 @@ Notice that in addition to fetching a list of launches, our query fetches hasMor
 - The hasMore field indicates whether there are additional launches beyond the list returned by the server.
 
 - The cursor field indicates the client's current position within the list of launches. We can execute the query again and provide our most recent cursor as the value of the $after variable to fetch the next set of launches in the list.
+
+## Apply the useQuery hook
+
+If you're using TypeScript, also import the necessary types that are generated from your server's schema definitions:
+
+```
+import * as GetLaunchListTypes from './__generated__/GetLaunchList';
+```
