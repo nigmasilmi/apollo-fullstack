@@ -225,3 +225,7 @@ The schema field that our server paginates is the list of launches. Modify the i
 This merge function takes our existing cached launches and the incoming launches and combines them into a single list, which it then returns. The cache stores this combined list and returns it to all queries that use the launches field.
 
 This example demonstrates a use of field policies, which are cache configuration options that are specific to individual fields in your schema.
+
+## Customizing the fetch policy
+
+[check the details](https://www.apollographql.com/tutorials/fullstack-quickstart/fetching-data-with-queries)
