@@ -229,3 +229,7 @@ This example demonstrates a use of field policies, which are cache configuration
 ## Customizing the fetch policy
 
 [check the details](https://www.apollographql.com/tutorials/fullstack-quickstart/fetching-data-with-queries)
+
+## Managin Local State
+
+[go to](https://www.apollographql.com/tutorials/fullstack-quickstart/managing-local-state)
