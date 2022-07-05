@@ -2,6 +2,8 @@ https://www.apollographql.com/tutorials/fullstack-quickstart/ <br/>
 https://github.com/nigmasilmi/apollo-fullstack
 https://github.com/r-spacex/SpaceX-API
 
+# Server
+
 A data source is any database, service, or API that holds the data you use to populate your schema's fields.
 A data source needs methods that enable it to fetch the data that incoming queries will request.
 
@@ -11,7 +13,10 @@ A resolver is a function that's responsible for populating the data for a single
 
 ## resolver's signature
 
+```
 fieldName: (parent, args, context, info) => data;
+```
+
 <strong>the resolver for a parent field always executes before the resolvers for that field's children</strong>
 
 testing a query
@@ -130,3 +135,55 @@ abcdfsomeid
 Apollo Studio is a cloud platform that helps you with every phase of GraphQL development, from prototyping to deploying to monitoring.
 
 Studio's core features are free for everyone. All of the features in this tutorial are free features.
+
+# Client
+
+## setting up VS Code
+
+Like Apollo Server, the VSCode extension uses an API key to communicate with Studio. You provide this API key by setting the value of the APOLLO_KEY environment variable.
+Create a .env file in start/client by making a copy of start/client/.env.example. Then paste your API key into it.
+
+in the root of the client project:
+
+```
+// apollo.config.js
+module.exports = {
+  client: {
+    name: "Space Explorer [web]",
+    service: "PASTE_YOUR_GRAPH_NAME_HERE",
+  },
+};
+```
+
+## Creating the client
+
+```
+import {
+  ApolloClient,
+  gql,
+  NormalizedCacheObject
+} from '@apollo/client';
+import { cache } from './cache';
+
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql'
+});
+// test a query for project setup health purposes
+
+client
+  .query({
+    query: gql`
+      query TestQuery {
+        launch(id: 56) {
+          id
+          mission {
+            name
+          }
+        }
+      }
+    `
+  })
+  .then(result => console.log(result));
+
+```
